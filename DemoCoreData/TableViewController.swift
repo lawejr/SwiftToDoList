@@ -48,6 +48,19 @@ class TableViewController: UITableViewController {
     }
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let context = appDelegate.persistentContainer.viewContext
+    
+    let tasksRequest: NSFetchRequest<Task> = Task.fetchRequest()
+    
+    do {
+      toDoItems = try context.fetch(tasksRequest)
+    } catch {
+      print("Error: \(error.localizedDescription)")
+    }
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
